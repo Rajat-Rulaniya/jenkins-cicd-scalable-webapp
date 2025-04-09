@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh 
-                '''
+                sh '''
                 cd 01-jenkins-basics
                 python3 -m venv venv
                 . venv/bin/activate
@@ -16,8 +15,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 
-                '''
+                sh '''
                 cd 01-jenkins-basics
                 . venv/bin/activate
                 pytest
