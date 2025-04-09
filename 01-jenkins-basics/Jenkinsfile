@@ -4,13 +4,24 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh 'cd 01-jenkins-basics; pip install -r requirements.txt'
+                sh 
+                '''
+                cd 01-jenkins-basics
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'cd 01-jenkins-basics; pytest'
+                sh 
+                '''
+                cd 01-jenkins-basics
+                . venv/bin/activate
+                pytest
+                '''
             }
         }
     }
