@@ -29,7 +29,7 @@ pipeline {
 
         stage("Package Code"){
             steps {
-                sh " zip -r ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip ./02-single-server-deployment/* -x '*.git*' -x 'ansible' -x 'venv'"
+                sh " zip -r ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip ./02-single-server-deployment/* -x '*.git*' -x '*ansible*' -x '*venv*'"
             }
         }
 
