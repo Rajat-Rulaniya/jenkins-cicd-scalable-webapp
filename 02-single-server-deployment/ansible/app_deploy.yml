@@ -15,9 +15,17 @@
         dest: '/home/ubuntu/flaskapp/'
         remote_src: yes
 
+    - name: Ensure venv exists
+      command: python3 -m venv venv
+      args:
+        chdir: /home/ubuntu/flaskapp/
+      creates: /home/ubuntu/flaskapp/venv/bin/activate
+
     - name: Install dependencies
-      command: venv/bin/pip install -r requirements.txt
-      args: 
+      pip: 
+        requirements: requirements.txt
+        virtualenv: /home/ubuntu/flaskapp/venv
+      args:
         chdir: /home/ubuntu/flaskapp/
 
     - name: Restart Flask App service
