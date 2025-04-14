@@ -1,0 +1,26 @@
+---
+- name: deploy python application
+  hosts: prod
+  gather_facts: false
+  become: yes
+  tasks:
+    - name: Upload zip file to app server 
+      copy:
+        src: './myapp-build-{{ buildNumber }}.zip'
+        dest: /home/ubuntu/flaskappZIPs/
+
+    - name: Extract zip file
+      unarchive:
+        src: '/home/ubuntu/flaskappZIPs/myapp-build-{{ buildNumber }}.zip'
+        dest: '/home/ubuntu/flaskapp/'
+        remote_src: yes
+
+    - name: Install dependencies
+      command: venv/bin/pip install -r requirements.txt
+      args: 
+        chdir: /home/ubuntu/flaskapp/
+
+    - name: Restart Flask App service
+      service:
+        name: flaskapp
+        state: restarted

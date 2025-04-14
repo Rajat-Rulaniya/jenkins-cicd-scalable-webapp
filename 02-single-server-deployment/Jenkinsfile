@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        ANSIBLE_SSH_PRIVATE_KEY_FILE = credentials('ansible-flask-app')
+    }
+
     stages {
         stage("Setup"){
             steps{
@@ -25,15 +29,18 @@ pipeline {
 
         stage("Package Code"){
             steps {
-                sh " zip -r /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip ./02-single-server-deployment/* -x '*.git*' "
+                sh " zip -r ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip ./02-single-server-deployment/* -x '*.git*' -x 'ansible' -x 'venv'"
             }
         }
 
         stage("Deploy Code to App server") {
             steps {
+                sh 'echo "$ANSIBLE_SSH_PRIVATE_KEY_FILE" > /tmp/base.pem'
+                sh 'chmod 600 /tmp/base.pem'
+
                 ansiblePlaybook(
-                    playbook: '/home/vagrant/ansible/flaskapp/app_deploy.yml',
-                    inventory: '/home/vagrant/ansible/flaskapp/hosts.ini',
+                    playbook: './02-single-server-deployment/ansible/app_deploy.yml',
+                    inventory: './02-single-server-deployment/ansible/hosts.ini',
                     extraVars: [
                         buildNumber: env.BUILD_NUMBER
                     ]
@@ -44,7 +51,8 @@ pipeline {
 
     post {
         always {
-            sh "rm -f /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip || true"
+            sh "rm -f ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip || true"
+            echo "Removed packaged zip file: myapp-build-${env.BUILD_NUMBER}.zip"
         }
     }
 }
