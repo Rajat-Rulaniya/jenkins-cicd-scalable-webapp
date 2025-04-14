@@ -25,10 +25,7 @@ pipeline {
 
         stage("Package Code"){
             steps {
-                sh """
-                cd 02-single-server-deployment
-                zip -r /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip ./* -x '*.git*'
-                """
+                sh " zip -r /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip ./02-single-server-deployment/* -x '*.git*' "
             }
         }
 
