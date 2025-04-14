@@ -31,6 +31,7 @@ pipeline {
 
         stage("Deploy Code to App server") {
             steps {
+                sh 'chmod 400 /tmp/base.pem'
                 ansiblePlaybook(
                     playbook: './02-single-server-deployment/ansible/app_deploy.yml',
                     inventory: './02-single-server-deployment/ansible/hosts.ini',
