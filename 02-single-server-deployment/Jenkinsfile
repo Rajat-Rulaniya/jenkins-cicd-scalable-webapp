@@ -25,15 +25,15 @@ pipeline {
 
         stage("Package Code"){
             steps {
-                sh "zip -r ~/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip ./* -x '*.git*'"
+                sh "zip -r /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip ./* -x '*.git*'"
             }
         }
 
         stage("Deploy Code to App server") {
             steps {
                 ansiblePlaybook(
-                    playbook: '~/ansible/flaskapp/app_deploy.yml',
-                    inventory: '~/ansible/flaskapp/hosts.ini',
+                    playbook: '/home/vagrant/ansible/flaskapp/app_deploy.yml',
+                    inventory: '/home/vagrant/ansible/flaskapp/hosts.ini',
                     extraVars: [
                         buildNumber: env.BUILD_NUMBER
                     ]
@@ -44,7 +44,7 @@ pipeline {
 
     post {
         always {
-            sh "rm -f ~/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip || true"
+            sh "rm -f /home/vagrant/ansible/flaskapp/myapp-build-${env.BUILD_NUMBER}.zip || true"
         }
     }
 }
