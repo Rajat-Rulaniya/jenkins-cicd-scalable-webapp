@@ -4,3 +4,5 @@ __pycache__/
 app.pyc
 venv/
 .aws-sam/
+*.pem
+temp.*
