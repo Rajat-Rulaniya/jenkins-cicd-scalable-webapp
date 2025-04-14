@@ -16,10 +16,10 @@
         remote_src: yes
 
     - name: Ensure venv exists
-      command: python3 -m venv venv
+      shell: python3 -m venv venv
       args:
         chdir: /home/ubuntu/flaskapp/
-      creates: /home/ubuntu/flaskapp/venv/bin/activate
+        creates: /home/ubuntu/flaskapp/venv/bin/activate
 
     - name: Install dependencies
       pip: 
