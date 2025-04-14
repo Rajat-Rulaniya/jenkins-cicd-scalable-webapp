@@ -43,10 +43,10 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            sh "rm -f ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip || true"
-            echo "Removed packaged zip file: myapp-build-${env.BUILD_NUMBER}.zip"
-        }
-    }
+    // post {
+    //     always {
+    //         sh "rm -f ./02-single-server-deployment/ansible/myapp-build-${env.BUILD_NUMBER}.zip || true"
+    //         echo "Removed packaged zip file: myapp-build-${env.BUILD_NUMBER}.zip"
+    //     }
+    // }
 }
