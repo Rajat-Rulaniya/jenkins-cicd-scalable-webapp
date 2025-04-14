@@ -35,8 +35,8 @@ pipeline {
         stage("Deploy Code to App server") {
             steps {
                 ansiblePlaybook(
-                    playbook: '~/ansible/flaskapp/app_deploy.yml'
-                    inventory: '~/ansible/flaskapp/hosts.ini'
+                    playbook: '~/ansible/flaskapp/app_deploy.yml',
+                    inventory: '~/ansible/flaskapp/hosts.ini',
                     extravars: [
                         buildNumber: env.BUILD_NUMBER
                     ]
