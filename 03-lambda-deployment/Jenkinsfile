@@ -6,31 +6,31 @@ pipeline {
 
         stage('Setup') {
             steps {
-                sh "
+                sh """
                     cd 03-lambda-deployment
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r lambda-app/tests/requirements.txt
-                "
+                """
             }
         }
 
         stage('Test') {
             steps {
-                sh "
+                sh """
                     cd 03-lambda-deployment
                     . venv/bin/activate
                     pytest
-                "
+                """
             }
         }
 
         stage('Build') {
             steps {
-                sh "
+                sh """
                     cd 03-lambda-deployment
                     sam build -t lambda-app/template.yaml
-                "
+                """
             }
         }
 
