@@ -5,6 +5,8 @@ pipeline {
         IMAGE_NAME = 'rajatrulaniya/flask-app'
         IMAGE_TAG = "${IMAGE_NAME}:${env.GIT_COMMIT}"
         DOCKER_CREDENTIALS = credentials('dockerhub-creds')
+        DOCKER_CLIENT_TIMEOUT = '300'
+        COMPOSE_HTTP_TIMEOUT  = '300'
     }
 
     
