@@ -31,10 +31,17 @@ pipeline {
             }
         }    
 
+        stage('Docker Login') {
+            steps {
+                sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
+            }
+        }
+
         stage('Build Image') {
             steps {
                 sh """
                     cd 04-docker
+
                     docker build -t ${IMAGE_TAG} .
                 """
             }
@@ -44,7 +51,6 @@ pipeline {
             steps {
                 sh """
                     cd 04-docker
-                    echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
 
                     docker push ${IMAGE_TAG}
                 """
